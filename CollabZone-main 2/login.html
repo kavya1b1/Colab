@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - CollabZone</title>
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+  <div class="login-container">
+    <h1>Login</h1>
+    <form id="loginForm" onsubmit="login(event)">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" placeholder="Enter your username" required>
+      
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="Enter your password" required>
+      
+      <button type="submit" class="btn">Login</button>
+    </form>
+  </div>
+  
+  <script>
+    // Login Functionality
+    function login(event) {
+        // Prevent default form submission
+        event.preventDefault();
+
+        // Get input values
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value;
+
+        // Retrieve existing users from localStorage
+        const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
+        const user = existingUsers.find(user => user.username === username && user.password === password);
+
+        if (user) {
+            // Save logged-in user info to localStorage
+            localStorage.setItem('currentUser', JSON.stringify({ username }));
+            alert("Login successful!");
+            window.location.href = 'interface.html'; // Redirect to the main page
+        } else {
+            alert("Invalid username or password. Please try again.");
+        }
+    }
+  </script>
+  <script src="frontend_integration.js"></script>
+
+</body>
+</html>

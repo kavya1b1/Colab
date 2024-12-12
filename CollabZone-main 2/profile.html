@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles1.css">
+  <title>User Profile</title>
+</head>
+<body>
+  <div class="container">
+    <h1>User Profile</h1>
+    <form id="profile-form">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+      
+      <label for="skills">Programming Skills:</label>
+      <input type="text" id="skills" name="skills">
+
+      <label for="travelHistory">Travel History:</label>
+      <textarea id="travelHistory" name="travelHistory"></textarea>
+      
+      <button type="submit">Update Profile</button>
+    </form>
+    <button id="logout">Logout</button>
+  </div>
+  <script src="frontend_integration.js"></script>
+</body>
+</html>

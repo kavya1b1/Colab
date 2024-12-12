@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Start a project - CollabZone</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+  }
+  
+  .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  header {
+    background: linear-gradient(135deg, #ff8c42, #e36225);
+    color: #fff;
+    padding: 15px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .nav-links {
+    list-style: none;
+    display: flex;
+  }
+  
+  .nav-links li {
+    margin: 0 15px;
+  }
+  
+  .nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease, background 0.3s ease;
+    padding: 8px 12px;
+    border-radius: 5px;
+  }
+  
+  .nav-links a:hover {
+    background-color: #ffd27f;
+    color: #e36225;
+  }
+  
+  section {
+    padding: 30px 0;
+  }
+  
+  h1, h2, h3 {
+    font-weight: 600;
+  }
+  
+  h4 {
+    margin-bottom: 10px;
+  }
+  
+  .form-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  textarea {
+    height: 100px;
+  }
+  
+  button.btn {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  button.btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .search-tabs {
+    display: flex;
+    margin-top: 20px;
+  }
+  
+  .tab-btn {
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .tab-btn.active {
+    background-color: #007BFF;
+    color: white;
+  }
+  
+  .tab-btn:hover {
+    background-color: #ffd27f;
+    color: #e36225;
+  }
+  
+  .results-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .results-list li {
+    padding: 10px;
+    background-color: #fff;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+  }
+  </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+  <header>
+    <nav class="navbar">
+      <div class="container">
+        <h1 class="logo">Collab<span>Zone</span></h1>
+        <ul class="nav-links">
+          <li><a href="interface.html">Home</a></li>
+          <li><a href="travelpg.html">Travel</a></li>
+          <li><a href="hackathon1.html">hackathons</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <div class="container">
+    <h1>Project Management</h1>
+
+    <!-- Create Team Section -->
+    <section class="form-section">
+      <h2>Create a Team</h2>
+      <form id="createTeamForm">
+        <label for="projectType">Project Type</label>
+        <select id="projectType" required>
+          <option value="">-- Select Project Type --</option>
+          <option value="AI/ML">AI/ML</option>
+          <option value="Web Development">Web Development</option>
+          <option value="Mobile Development">Mobile Development</option>
+          <option value="Data Science">Data Science</option>
+          <option value="other">other</option>
+        </select>
+        <label for="team-description">Team Description:</label>
+        <textarea id="team-description" placeholder="Enter a brief description of your Project" required></textarea>
+        <div id="team-members">
+            <!-- Member Inputs will be appended here -->
+          </div>
+
+          <button type="button" class="btn" onclick="addTeamMember()">Add Member</button>
+          <button type="submit" class="btn">Create Team</button>
+        </form>
+      </div>
+      </form>
+    </section>
+
+    <!-- Search Team Section -->
+    <section class="search-section">
+      <h2>Search Teams</h2>
+      <form id="searchTeamForm">
+        <label for="searchProjectType">Project Type</label>
+        <select id="searchProjectType">
+          <option value="">-- Select Project Type --</option>
+          <option value="AI/ML">AI/ML</option>
+          <option value="Web Development">Web Development</option>
+          <option value="Mobile Development">Mobile Development</option>
+          <option value="Data Science">Data Science</option>
+        </select>
+        <label for="availableSeats">Min Available Seats</label>
+        <input type="number" id="availableSeats" placeholder="Enter min available seats" min="1">
+        <button type="submit">Search</button>
+      </form>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results-section">
+      <h2>Team Results</h2>
+      <ul class="results-list" id="resultsList"></ul>
+    </section>
+
+    <!-- My Teams Section -->
+    <section class="my-teams-section">
+      <h2>My Teams</h2>
+      <ul class="my-teams-list" id="myTeamsList"></ul>
+    </section>
+  </div>
+  <script>
+    const teams = [];
+  let userTeams = [];
+
+  // Handle Create Team
+  document.getElementById("createTeamForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const projectType = document.getElementById("projectType").value;
+    const teamDescription = document.getElementById("team-description").value;
+    const maxSeats = parseInt(document.getElementById("maxSeats")?.value || "1");
+
+    // Collecting team members from the form dynamically
+    const teamMembers = [];
+    const memberDivs = document.querySelectorAll('.team-member');
+    memberDivs.forEach(memberDiv => {
+      const name = memberDiv.querySelector('input[id^="member-name"]').value;
+      const username = memberDiv.querySelector('input[id^="member-username"]').value;
+      const skill = memberDiv.querySelector('input[id^="member-skill"]').value;
+      if (name && username && skill) {
+        teamMembers.push({ name, username, skill });
+      }
+    });
+
+    // Check if all required fields are filled
+    if (projectType && teamDescription && teamMembers.length > 0 && maxSeats > 0) {
+      const newTeam = {
+        projectType,
+        teamDescription,
+        teamMembers,
+        maxSeats,
+        availableSeats: maxSeats - teamMembers.length, // Calculate available seats
+      };
+      teams.push(newTeam); // Add team to global teams list
+      userTeams.push(newTeam); // Add team to user teams list
+      alert("Team created successfully!");
+      updateMyTeamsList(); // Update the list of my teams
+      this.reset(); // Reset the form after submission
+      document.getElementById("team-members").innerHTML = ''; // Clear dynamic team members
+    } else {
+      alert("Please fill in all fields correctly.");
+    }
+  });
+
+  // Handle Search Teams
+  document.getElementById("searchTeamForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const searchProjectType = document.getElementById("searchProjectType").value;
+    const availableSeats = parseInt(document.getElementById("availableSeats").value || "0");
+    const resultsList = document.getElementById("resultsList");
+    resultsList.innerHTML = "";
+
+    const filteredTeams = teams.filter(team => {
+      const matchesProjectType = searchProjectType ? team.projectType === searchProjectType : true;
+      const matchesSeats = team.availableSeats >= availableSeats;
+      return matchesProjectType && matchesSeats;
+    });
+
+    if (filteredTeams.length > 0) {
+      filteredTeams.forEach(team => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <span><strong>${team.projectType}</strong>: ${team.teamMembers.map(m => m.name).join(", ")} (Available Seats: ${team.availableSeats})</span>
+          <button onclick="addMemberToTeam('${team.projectType}')">Join Team</button>
+        `;
+        resultsList.appendChild(li);
+      });
+    } else {
+      resultsList.innerHTML = "<li>No teams found.</li>";
+    }
+  });
+
+  // Add Member to Team
+  function addTeamMember() {
+    const teamMembersDiv = document.getElementById('team-members');
+    const memberCount = teamMembersDiv.children.length + 1;
+
+    const memberDiv = document.createElement('div');
+    memberDiv.classList.add('team-member');
+    memberDiv.innerHTML = `
+      <h4>Member ${memberCount}</h4>
+      <label for="member-name-${memberCount}">Name:</label>
+      <input type="text" id="member-name-${memberCount}" placeholder="Enter name" required>
+
+      <label for="member-username-${memberCount}">Username:</label>
+      <input type="text" id="member-username-${memberCount}" placeholder="Enter username" required>
+
+      <label for="member-skill-${memberCount}">Skill:</label>
+      <input type="text" id="member-skill-${memberCount}" placeholder="Enter skill" required>
+    `;
+    teamMembersDiv.appendChild(memberDiv);
+  }
+
+  // Update "My Teams" List
+  function updateMyTeamsList() {
+    const myTeamsList = document.getElementById("myTeamsList");
+    myTeamsList.innerHTML = "";
+    userTeams.forEach(team => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <span><strong>${team.projectType}</strong>: ${team.teamMembers.map(m => m.name).join(", ")} (Available Seats: ${team.availableSeats})</span>
+        <button onclick="removeTeam('${team.projectType}')">Remove Team</button>
+      `;
+      myTeamsList.appendChild(li);
+    });
+  }
+
+  // Remove Team
+  function removeTeam(projectType) {
+    const teamIndex = userTeams.findIndex(team => team.projectType === projectType);
+    if (teamIndex > -1) {
+      userTeams.splice(teamIndex, 1); // Remove the team from user teams list
+      alert("Team removed successfully!");
+      updateMyTeamsList(); // Re-update the list
+    }
+  }
+    
+  </script>
+</body>
+</html>

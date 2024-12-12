@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hackathon Teams - CollabZone</title>
+  <link rel="stylesheet" href="styleee.css">
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <header>
+    <nav class="navbar">
+      <div class="container">
+        <h1 class="logo">Collab<span>Zone</span></h1>
+        <ul class="nav-links">
+          <li><a href="interface.html">Home</a></li>
+          <li><a href="travelpg.html">Travel</a></li>
+          <li><a href="projectpg.html">Projects</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hackathon Section -->
+  <section class="section-page">
+    <div class="container">
+      <h2>Find Your Hackathon Team or Teammates</h2>
+      <p>Search and connect with individuals or teams for upcoming hackathons based on skills and seat availability.</p>
+
+      <!-- Create Your Team Button -->
+      <button class="btn" onclick="showCreateTeamForm()">Create Your Team</button>
+
+      <!-- Team Creation Form -->
+      <div id="create-team-form" class="form-section hidden">
+        <h3>Create Your Team</h3>
+        <form id="team-form">
+          <label for="team-name">Team Name:</label>
+          <input type="text" id="team-name" placeholder="Enter team name" required>
+
+          <label for="team-capacity">Team Capacity:</label>
+          <input type="number" id="team-capacity" placeholder="Max number of members" required>
+
+          <label for="team-description">Team Description:</label>
+          <textarea id="team-description" placeholder="Enter a brief description of your team or hackathon idea" required></textarea>
+
+          <div id="team-members">
+            <!-- Member Inputs will be appended here -->
+          </div>
+
+          <button type="button" class="btn" onclick="addTeamMember()">Add Member</button>
+          <button type="submit" class="btn">Create Team</button>
+        </form>
+      </div>
+
+      <!-- Search Type Tabs -->
+      <div class="search-tabs">
+        <button class="tab-btn active" onclick="showSearch('individual')">Search Individuals</button>
+        <button class="tab-btn" onclick="showSearch('teams')">Search Teams</button>
+      </div>
+
+      <!-- Search for Individuals -->
+      <div id="search-individual" class="search-section">
+        <h3>Search for Individuals</h3>
+        <form id="individual-search-form">
+          <label for="individual-skill">Skill:</label>
+          <input type="text" id="individual-skill" placeholder="Enter skill (e.g., Python, AI/ML)">
+
+          <label for="individual-skill-level">Skill Level:</label>
+          <select id="individual-skill-level">
+            <option value="">Any</option>
+            <option value="beginner">Beginner</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+          </select>
+
+          <button type="button" class="btn" onclick="searchIndividuals()">Search</button>
+        </form>
+        <ul id="individual-results-list" class="results-list"></ul>
+      </div>
+
+      <!-- Search for Teams -->
+      <div id="search-teams" class="search-section hidden">
+        <h3>Search for Teams</h3>
+        <form id="team-search-form">
+          <label for="team-skill">Required Skill:</label>
+          <input type="text" id="team-skill" placeholder="Enter skill (e.g., Front-End, AI/ML)">
+
+          <label for="team-seats">Seat Vacancies:</label>
+          <input type="number" id="team-seats" placeholder="Number of vacancies">
+
+          <button type="button" class="btn" onclick="searchTeams()">Search</button>
+        </form>
+        <ul id="team-results-list" class="results-list"></ul>
+      </div>
+
+      <!-- My Teams Section -->
+      <div id="my-teams">
+        <h3>My Teams</h3>
+        <ul id="my-teams-list" class="results-list"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2024 CollabZone. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    const createdTeams = []; // Array to store created teams
+
+    // Show/Hide Create Team Form
+    function showCreateTeamForm() {
+      document.getElementById('create-team-form').classList.toggle('hidden');
+    }
+
+    // Add Team Member Fields
+    function addTeamMember() {
+      const teamMembersDiv = document.getElementById('team-members');
+      const memberCount = teamMembersDiv.children.length + 1;
+
+      const memberDiv = document.createElement('div');
+      memberDiv.classList.add('team-member');
+      memberDiv.innerHTML = `
+        <h4>Member ${memberCount}</h4>
+        <label for="member-name-${memberCount}">Name:</label>
+        <input type="text" id="member-name-${memberCount}" placeholder="Enter name" required>
+
+        <label for="member-username-${memberCount}">Username:</label>
+        <input type="text" id="member-username-${memberCount}" placeholder="Enter username" required>
+
+        <label for="member-skill-${memberCount}">Skill:</label>
+        <input type="text" id="member-skill-${memberCount}" placeholder="Enter skill" required>
+      `;
+      teamMembersDiv.appendChild(memberDiv);
+    }
+
+    // Add Created Team to My Teams
+    document.getElementById('team-form').addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const teamName = document.getElementById('team-name').value;
+      const teamCapacity = document.getElementById('team-capacity').value;
+      const teamDescription = document.getElementById('team-description').value;
+      const members = [];
+
+      // Collect member details
+      const memberInputs = document.querySelectorAll('.team-member');
+      memberInputs.forEach((member, index) => {
+        const name = document.querySelector(`#member-name-${index + 1}`).value;
+        const username = document.querySelector(`#member-username-${index + 1}`).value;
+        const skill = document.querySelector(`#member-skill-${index + 1}`).value;
+
+        members.push({ name, username, skill });
+      });
+
+      // Add team to global array
+      const newTeam = { name: teamName, capacity: teamCapacity, description: teamDescription, members };
+      createdTeams.push(newTeam);
+
+      // Render Teams List
+      renderTeams();
+      document.getElementById('create-team-form').classList.add('hidden');
+    });
+
+    // Render My Teams List
+    function renderTeams() {
+      const teamsList = document.getElementById('my-teams-list');
+      teamsList.innerHTML = ''; // Clear previous list
+
+      createdTeams.forEach((team, teamIndex) => {
+        const teamItem = document.createElement('li');
+        teamItem.innerHTML = `
+          <h4>${team.name} (Capacity: ${team.capacity})</h4>
+          <p><strong>Description:</strong> ${team.description}</p>
+          <ul>
+            ${team.members
+              .map(
+                (member, memberIndex) =>
+                  `<li>
+                    ${member.name} (${member.username}) - Skill: ${member.skill}
+                    <button class="btn small-btn" onclick="removeMember(${teamIndex}, ${memberIndex})">Remove Member</button>
+                  </li>`
+              )
+              .join('')}
+          </ul>
+          <button class="btn" onclick="removeTeam(${teamIndex})">Remove Team</button>
+        `;
+        teamsList.appendChild(teamItem);
+      });
+    }
+
+    // Remove a Team
+    function removeTeam(index) {
+      createdTeams.splice(index, 1); // Remove team from array
+      renderTeams(); // Re-render teams
+    }
+
+    // Remove a Member
+    function removeMember(teamIndex, memberIndex) {
+      createdTeams[teamIndex].members.splice(memberIndex, 1); // Remove member from team
+      renderTeams(); // Re-render teams
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel Buddy</title>
+  <link rel="stylesheet" href="travelpg.css">
+</head>
+<body>
+  <header class="navbar">
+    <h1 class="logo">Collab<span>Zone</span></h1>
+    <ul class="nav-links">
+      <li><a href="interface.html">Home</a></li>
+      <li><a href="hackathon1.html">hackathon</a></li>
+      <li><a href="projectpg.html">Projects</a></li>
+    </ul>
+  </header>
+
+  <!-- Search Individuals Section -->
+  <section id="search-individual" class="section">
+    <h2>Search Individuals</h2>
+    <input type="text" id="search-individual-input" placeholder="Search by name, origin, or destination">
+    <button onclick="searchIndividuals()">Search</button>
+    <ul id="individual-results-list" class="results-list"></ul>
+  </section>
+
+  <!-- Search Teams Section -->
+  <section id="search-team" class="section">
+    <h2>Search Teams</h2>
+    <input type="text" id="search-team-input" placeholder="Search by team name, origin, or destination">
+    <button onclick="searchTeams()">Search</button>
+    <ul id="team-results-list" class="results-list"></ul>
+  </section>
+
+  <!-- Create Team Section -->
+  <section id="create-team" class="section">
+    <h2>Create a Team</h2>
+    <form id="team-form">
+      <input type="text" id="team-name" placeholder="Team Name" required>
+      <input type="text" id="team-from" placeholder="From" required>
+      <input type="text" id="team-to" placeholder="To" required>
+      <input type="date" id="team-date" required>
+      <input type="time" id="team-time" required>
+      <textarea id="team-rules" placeholder="Rules (e.g., share costs, no smoking)" required></textarea>
+      <div id="team-members">
+        <input type="text" class="team-member-input" placeholder="Enter member name" required>
+      </div>
+      <button type="button" onclick="addTeamMember()">Add Another Member</button>
+      <button type="submit">Create Team</button>
+    </form>
+  </section>
+
+  <!-- My Teams Section -->
+  <section id="my-teams" class="section">
+    <h2>My Teams</h2>
+    <ul id="my-teams-list" class="results-list"></ul>
+  </section>
+
+  <script src="travelpg.js"></script>
+</body>
+</html>
