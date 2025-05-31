@@ -49,5 +49,15 @@ Students can post requirements, get matched based on **skills, interests, or des
 
 ---
 
-## 📂 Project Structure
+
+---
+
+## ⚙️ Setup Instructions
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/yourusername/campusconnect.git
+cd campusconnect
+
 
